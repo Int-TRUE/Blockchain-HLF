@@ -31,7 +31,7 @@ const ccp = JSON.parse(fs.readFileSync(ccpPath, "utf8"));
 
 
 // 로그인을 기반으로 CC가 동작하게 미들뤠어 처리
-// gateway접속, 채널 접속, 사용할 cc기져오기, cc호출하기 부분만 기술
+// gateway접속, 채널 접속, 사용할 cc기져오기, cc호출하기 부분만 기술(r공통부분 소스코드 중복 피하기)
 // app.post('/login', async(req, res)=>{
 //     const id = req.body.id
 //     console.log(id)

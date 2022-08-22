@@ -84,10 +84,11 @@
             $("#result").append(`<tr><td>주행거리(km)</td><td>${obj.drive}</td></tr>`)
             $("#result").append(`<tr><td>상태</td><td>${obj.state}</td></tr>`)
             $("#result").append(`<hr style="margin-bottom: 5px;">`)
+            $("#result").append(`<p>**0번째 사용이력은 등록 당시 기록된 이력입니다.</p>`)
 
             for(let i=0; i<obj.history.length; i++){
                 $("#result").append(`<mark>${i}번째 사용이력</mark>`)
-                $("#result").append(`<tr><td>이력-사용자ID</td><td>${obj.history[i].kickid}</td></tr>`)
+                $("#result").append(`<tr><td>이력-사용자ID</td><td>${obj.history[i].userid}</td></tr>`)
                 $("#result").append(`<tr><td>이력-주행한거리</td><td>${obj.history[i].drive}</td></tr>`)
                 $("#result").append(`<tr><td>이력-시작시간</td><td>${obj.history[i].starttime}</td></tr>`)
                 $("#result").append(`<tr><td>이력-종료시간</td><td>${obj.history[i].finishtime}</td></tr>`)

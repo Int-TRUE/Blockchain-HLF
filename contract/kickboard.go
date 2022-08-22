@@ -22,7 +22,7 @@ type Kickboard struct{
 }
 
 type History struct{
-	UserID string  `json:"kickid"`
+	UserID string  `json:"userid"`
 	Drive string `json:"drive"`
 	StartTime string `json:"starttime"`
 	FinishTime string `json:"finishtime"`
