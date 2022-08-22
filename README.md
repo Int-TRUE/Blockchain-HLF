@@ -1,4 +1,5 @@
 # KickKeeping 실행방법 및 순서
+<img src="https://user-images.githubusercontent.com/87708291/185851520-35e91005-a3a0-4711-9bb2-72d4f180f269.png" width="600px"/>
 
 ## 1. Network 실행
 
