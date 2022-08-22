@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- jQuery 라이브러리 추가-->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>킥키핑: 블록체인 기반 공유 킥보드 관리 시스템</title>
+</head>
+<body>
+    <body style="text-align: center;">
+        <div id="home-title" style="background-color: rgb(255, 235, 17);">
+            <br>
+            <b><h1 style="color: white; font-size: 80px;">킥키핑</h1></b>
+            <h3 style="margin-top: 10px; color: white">KickKeeping</h3>
+            <br>
+            <p>공유킥보드 관리 시스템에 오신것을 환영합니다.</p>
+            <img src="./electric-scooter.png" style="width: 50px;" alt="scooter">
+            <br><br>
+        </div>
+    <div class="container" style="margin-top: 10px">
+        <br>
+        <h1>사용자 회원가입</h1>
+        <br>
+        <p>사용자 회원가입에 필요한 정보를 입력해주세요.</p>
+        <br>
+
+        <label class="form-label">User ID</label>
+        <input type="text" class="form-control" id="userid">
+        <br><br>
+        <label class="form-label">User PW</label>
+        <input type="password" class="form-control" id="userpw">
+        <br>
+        <button id="gen-btn" class="btn btn-success">사용자 회원가입</button>
+   </div>
+   <div class="container" id="result">
+
+   </div>
+    
+</body>
+<script>
+    //그냥 로그 찍으면 버튼 클릭과 상관없이 찍힘.
+    // 핸들링해줘야함.
+    // document.getElementById("get-btn").click(){
+        //아래와 같은 코드.
+    // }
+    $("#gen-btn").click(()=>{
+
+        // id / role 가져오기
+        const id = $("#userid").val() // value: 객체의 값을 조회해옴.
+        const pw = $("#userpw").val()
+
+        console.log(id, pw)
+
+        // 콜백 사용하면 페이지가 살아있는 상태에서 일부갱신 가능: 반응형 웹
+        $.post("/registeruser", {id, pw}, (data, status)=>{ // $: 현재 스크립트 객체
+            console.log(status)
+
+            $("#result").empty()
+            const res= JSON.stringify(data)
+            $("#result").append(res)
+        })  
+        // server에게 post 메소드를 보낸다.
+        // url: /user
+        // id와 role을 실어서 보낸다.
+        console.log("button이 클릭 되었습니다.")
+    })
+
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Gugi&display=swap');
+    #home-title{
+        font-family: 'Gugi', cursive;
+        border-radius: 0px 0px 40px 40px;
+    }
+</style>
+</html>

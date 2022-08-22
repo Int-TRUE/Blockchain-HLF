@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- jQuery 라이브러리 추가-->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>킥키핑: 블록체인 기반 공유 킥보드 관리 시스템</title>
+</head>
+<body style="text-align: center;">
+    <div id="home-title" style="background-color: rgb(5, 212, 157);">
+        <br>
+        <b><h1 style="color: white; font-size: 80px;">킥키핑</h1></b>
+        <h3 style="margin-top: 10px; color: white">KickKeeping</h3>
+        <br>
+        <p>공유킥보드 관리 시스템에 오신것을 환영합니다.</p>
+        <img src="./electric-scooter.png" style="width: 50px;" alt="scooter">
+        <br><br>
+    </div>
+    <div class="container" style="margin-top: 10px">
+        <br>
+        <h1>킥보드 조회하기</h1>
+        <br>
+        <p>조회할 킥보드의 ID를 입력해주세요.</p>
+        <br>
+
+        <label class="form-label">킥보드 ID</label><br>
+        <input type="text" id="kickid" class="form-control"><br>
+
+        <button class="btn btn-success" id="query-btn" style="margin-left: 20px;">조회하기</button>
+        <!--<button class="btn btn-primary" id="query-all-btn" style="margin-left: 20px;">모든 킥보드 조회하기</button>-->
+
+        <br><br>
+
+    </div>
+    <div class="container">
+        <table class="table table-hover">
+            <tbody id="result">
+            </tbody>
+        </table>
+    </div>
+    
+</body>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Gugi&display=swap');
+    #home-title{
+        font-family: 'Gugi', cursive;
+        border-radius: 0px 0px 40px 40px;
+    }
+    mark {
+        background-color: rgb(133, 254, 232);
+    }
+</style>
+<script>
+
+    $("#query-btn").click(()=>{
+        const id = $("#kickid").val()
+
+        console.log(id)
+
+        $.get("/queryK", {id}, (data)=>{ // status써도 상관은 없음
+            console.log(data) // result : "ㅇ" msg:"ㅇ"
+            
+            const res = JSON.stringify(data.msg)
+            const obj = JSON.parse(res)
+
+            if(data.result == "success"){
+                alert("조회 성공입니다!")
+            }else{
+                alert(`${data.msg}`)
+            }
+
+            $("#result").empty() //이전 결과 지워주기
+
+            // type Asset 참고
+            $("#result").append(`<tr><td>킥보드 ID</td><td>${obj.kickid}</td></tr>`)
+            $("#result").append(`<tr><td>배터리</td><td>${obj.battery}</td></tr>`)
+            $("#result").append(`<tr><td>위치</td><td>${obj.location}</td></tr>`)
+            $("#result").append(`<tr><td>주행거리(km)</td><td>${obj.drive}</td></tr>`)
+            $("#result").append(`<tr><td>상태</td><td>${obj.state}</td></tr>`)
+            $("#result").append(`<hr style="margin-bottom: 5px;">`)
+
+            for(let i=0; i<obj.history.length; i++){
+                $("#result").append(`<mark>${i+1}번째 사용이력</mark>`)
+                $("#result").append(`<tr><td>이력-사용자ID</td><td>${obj.history[i].kickid}</td></tr>`)
+                $("#result").append(`<tr><td>이력-주행한거리</td><td>${obj.history[i].drive}</td></tr>`)
+                $("#result").append(`<tr><td>이력-시작시간</td><td>${obj.history[i].starttime}</td></tr>`)
+                $("#result").append(`<tr><td>이력-종료시간</td><td>${obj.history[i].finishtime}</td></tr>`)
+                $("#result").append(`<tr><td>이력-시작위치</td><td>${obj.history[i].startlocation}</td></tr>`)
+                $("#result").append(`<tr><td>이력-종료위치</td><td>${obj.history[i].finishlocation}</td></tr>`)
+            }
+        
+            
+
+            if(obj.drive >= 100){
+                alert("누적 주행거리가 100km 이상이므로, 상태 확인이 필요합니다.");
+            }
+
+        })
+    })
+
+    // $("#quert-all-btn").click(()=>{
+    //     const cert = "admin"
+
+    //     console.log(cert)
+
+    //     $.get("/allqueryK", {cert}, (data)=>{ // status써도 상관은 없음
+    //         console.log(data)
+            
+    //         //이번에는 msg에 여러개의 특성들이 담겨옴. 슬라이스접근하듯이 꺼내쓰기.
+
+    //         if(data.result == "success"){
+    //             alert("조회 성공입니다!")
+    //         }else{
+    //             alert(`${data.msg}`)
+    //         }
+    //         $("#result").empty() //이전 결과 지워주기
+
+    //         for(let i=0;i<data.msg.length;i++){
+                // $("#result").append(`<tr><td>킥보드 ID</td><td>${obj.kickid}</td></tr>`)
+                // $("#result").append(`<tr><td>배터리</td><td>${obj.battery}</td></tr>`)
+                // $("#result").append(`<tr><td>위치</td><td>${obj.location}</td></tr>`)
+                // $("#result").append(`<tr><td>주행거리(km)</td><td>${obj.drive}</td></tr>`)
+                // $("#result").append(`<tr><td>상태</td><td>${obj.state}</td></tr>`)
+                // $("#result").append(`<tr><td>이력</td><td>${obj.history}</td></tr>`)
+    //         }
+
+
+    //     })
+    // })
+
+</script>
+</html>
