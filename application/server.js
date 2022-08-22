@@ -167,10 +167,10 @@ app.post('/connect', async(req, res)=>{
             // const resultPath = path.join(process.cwd(), "./views/user.html")
         }
 
-        var resultHTML = fs.readFileSync(resultPath, "utf-8")
+        //var resultHTML = fs.readFileSync(resultPath, "utf-8")
 
         //resultHTML = resultHTML.replace("<dir></dir>", "<div><p>Transaction(Register Kickboard) has been submitted</p></div>")
-        res.send(resultHTML)
+        //res.send(resultHTML)
 
         await gateway.disconnect();
 
